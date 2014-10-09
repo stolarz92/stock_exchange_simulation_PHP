@@ -1,0 +1,30 @@
+
+{% extends 'base.twig' %}
+
+{% block title %}
+    Info
+{% endblock %}
+
+{% block content %}
+
+            <table class = "table">
+            <thead>
+            <tr>
+                <th>Login</th>
+                <th>Email</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ userinfo.login }}</td>
+                <td>{{ userinfo.email }}</td>
+                <td>{{ userinfo.firstname }}</td>
+                <td>{{ userinfo.lastname }}</td>
+                <td><a class = "btn btn-default" href="{{ url('/user/edit') }}" role = "button" >Edytuj</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+{% endblock %}

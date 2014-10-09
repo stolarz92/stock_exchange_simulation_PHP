@@ -1,0 +1,28 @@
+{% extends 'base.twig' %}
+
+{% block title %}Notowania giełdowe{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.getFlashBag.get('message') %}
+        {{ flashMessage.content }}
+    {% endfor %}
+    <div>
+        <h2>Aktualne kursy</h2>
+        <table class = "table">
+            <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Kurs</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.stock_name|e }}</td>
+                    <td>{{ stock.current_price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.twig' %}
+
+{% block title %}Twój portfel{% endblock %}
+
+{% block content %}
+    {% if is_granted('ROLE_USER') %}
+
+        {% for flashMessage in app.session.getFlashBag.get('message') %}
+            {{ flashMessage.content }}
+        {% endfor %}
+
+
+
+    <div class = "container">
+        <table class= "table">
+            <caption><h3>Gotówka</h3></caption>
+            <thead>
+            <tr>
+                <th>Gotówka</th>
+                <th>Zablokowane pod zlecenia</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ wallet.cash }}</td>
+                <td>{{ wallet.blocked_cash }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class = "table">
+            <caption><h3>Posiadane akcje</h3></caption>
+            <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Ilość</th>
+                <th>Zablokowane pod zlecenia</th>
+                <th>Uśredniona cena</th>
+                <th>Data zakupu</th>
+                <th>Wartość</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for stock in user_stocks %}
+            <tr>
+                <td>{{ stock.stock_name }}</td>
+                <td>{{ stock.amount }}</td>
+                <td>{{ stock.blocked_stocks }}</td>
+                <td>{{ stock.purchase_price|round(2, 'common') }}</td>
+                <td>{{ stock.datetime }}</td>
+                <td>{{ stock.value }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+
+    No entry
+
+{% endif %}
+{% endblock %}
+

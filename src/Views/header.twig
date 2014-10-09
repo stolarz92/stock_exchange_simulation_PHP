@@ -1,0 +1,37 @@
+{% block content %}
+    <div class = "center-block">
+        <h1 class = "main-header">Symulacja giełdy papierów wartościowych</h1>
+    </div>
+    <nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar">
+    <div class="navbar-inner">
+    <a class="brand" href= {{ url('/index') }}>Notowania</a>
+
+    {% if is_granted ('ROLE_ADMIN') %}
+        <ul class = "nav">
+            <li><a href = {{ url('/admin/stocks') }}>Modyfikuj akcje</a></li>
+            <li><a href = {{ url('/admin/controlpanel') }}>Modyfikuj zlecenia</a></li>
+            <li><a href = {{ url('/admin/addoffer') }}>Dodaj zlecenie</a></li>
+            <li><a href = {{ url('/auth/logout') }}>Wyloguj</a></li>
+        </ul>
+    {% elseif is_granted('ROLE_USER') %}
+        <ul class = "nav">
+            <li><a href = {{ url('/user/info') }}>Profil</a></li>
+            <li><a href = {{ url('/stocks/wallet') }}>Portfel</a></li>
+            <li><a href = {{ url('/stocks/addoffer') }}>Zlecenia</a></li>
+            <li><a href = {{ url('/auth/logout') }}>Wyloguj</a></li>
+        </ul>
+    {% else %}
+
+                <ul class="nav">
+
+                    <li><a href="{{ url('/register/') }}">Zarejestruj się</a></li>
+                    <li><a href="{{ url('/auth/login') }}">Zaloguj</a></li>
+                </ul>
+
+    {% endif %}
+    </div>
+    </div>
+    </nav>
+
+{% endblock %}

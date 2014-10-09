@@ -1,0 +1,112 @@
+{% extends 'base.twig' %}
+
+{% block title %}Dodawanie oferty{% endblock %}
+
+{% block content %}
+
+    {% for flashMessage in app.session.getFlashBag.get('message') %}
+        {{ flashMessage.content }}
+    {% endfor %}
+    <div class = "container">
+
+        <form action="" method="post" style="float:left">
+            {{ form_widget(form) }}
+            <input class="btn btn-default" type="submit" name="Send">
+        </form>
+
+        <div class = "container">
+            <div class = "pull-right">
+                <table class = "table">
+                    <tr>
+                        <th>Gotówka</th>
+                        <td>{{ wallet.cash }}</td>
+                    </tr>
+                </table>
+
+                <table class = "table">
+                    <thead>
+                    <tr>
+                        <th>Akcje</th>
+                        <th>Ilość</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stock in user_stocks %}
+                        <tr>
+                            <td>{{ stock.stock_name }}</td>
+                            <td>{{ stock.amount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class = "container">
+        <table class = "table">
+            <caption><h3>Twoje zlecenia</h3></caption>
+            <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Rodzaj transakcji</th>
+                <th>Ilość</th>
+                <th>Cena</th>
+                <th>Data wystawienia</th>
+                <th>Wartość</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in order_sheet %}
+                <tr>
+                    <td>{{ order.stock_name }}</td>
+                    {% if order.buysell == 0 %}
+                        <td>Kupno</td>
+                    {% else %}
+                        <td>Sprzedaż</td>
+                    {% endif %}
+                    <td>{{ order.amount }}</td>
+                    <td>{{ order.price|round(2) }}</td>
+                    <td>{{ order.datetime }}</td>
+                    <td>{{ order.price * order.amount }}</td>
+                    <td><a class = "btn btn-default" href="{{ url('/stocks/editoffer', {'id': order.idorder_sheet}) }}" role = "button" >Edytuj</a></td>
+                    <td><a class = "btn btn-default" href="{{ url('/stocks/deleteoffer', {'id': order.idorder_sheet}) }}" role = "button" >Usuń</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+        <table class = "table">
+            <caption><h3>Historia twoich zleceń</h3></caption>
+            <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Rodzaj transakcji</th>
+                <th>Ilość</th>
+                <th>Cena</th>
+                <th>Data wystawienia</th>
+                <th>Wartość</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in history_of_orders %}
+                <tr>
+                    <td>{{ order.stock_name }}</td>
+                    {% if order.buysell == 0 %}
+                        <td>Kupno</td>
+                    {% else %}
+                        <td>Sprzedaż</td>
+                    {% endif %}
+                    <td>{{ order.realized_amount }}</td>
+                    <td>{{ order.price|round(2) }}</td>
+                    <td>{{ order.datetime }}</td>
+                    <td>{{ order.price * order.realized_amount }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.twig' %}
+
+{% block title %}Zmiana istniejących akcji na rynku{% endblock %}
+
+{% block content %}
+    <div class = "container">
+        <h3>Dodaj nowe akcje</h3>
+        {% for flashMessage in app.session.getFlashBag.get('message') %}
+            {{ flashMessage.content }}
+        {% endfor %}
+        <div>
+            <form action="" method="post" style="float:left">
+                {{ form_widget(form) }}
+                <input class="btn btn-default" type="submit" name="Send">
+            </form>
+        </div>
+    </div>
+
+    <div class = "container">
+        <h3>Edytuj akcje</h3>
+        <table class = "table">
+            <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Kurs</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.stock_name }}</td>
+                <td>{{ stock.current_price }}</td>
+                <td><a class = "btn btn-default" href="{{ url('/admin/editstock', {'id': stock.idstocks}) }}" role = "button" >Edytuj</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.twig' %}
+
+{% block title %}Zmiana istniejących akcji na rynku{% endblock %}
+
+{% block content %}
+    <div class = "container">
+        <h3>Edit exists stocks {{ stock_name }}</h3>
+        {% for flashMessage in app.session.getFlashBag.get('message') %}
+            {{ flashMessage.content }}
+        {% endfor %}
+        <div>
+            <form action="" method="post" style="float:left">
+                {{ form_widget(form) }}
+                <input class="btn btn-default" type="submit" name="Send">
+            </form>
+        </div>
+    </div>
+{% endblock %}

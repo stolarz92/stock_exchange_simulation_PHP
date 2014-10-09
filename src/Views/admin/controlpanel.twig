@@ -1,0 +1,84 @@
+{% extends 'base.twig' %}
+
+{% block title %}Arkusz zleceń{% endblock %}
+
+{% block content %}
+
+    {% for flashMessage in app.session.getFlashBag.get('message') %}
+        {{ flashMessage.content }}
+    {% endfor %}
+
+    <div>
+        <table class = "table">
+            <caption>Oferty w kolejce</caption>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa akcji</th>
+                <th>Rodzaj</th>
+                <th>Ilość</th>
+                <th>Zrealizowana ilość</th>
+                <th>Cena</th>
+                <th>Data</th>
+                <th>Id użytkownika</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for offer in order_sheet %}
+                {% if offer.realized == 0 %}
+                    <tr>
+                        <td>{{ offer.idorder_sheet }}</td>
+                        <td>{{ offer.stock_name }}</td>
+                        {% if offer.buysell == 0 %}
+                            <td>Kupno</td>
+                        {% else %}
+                            <td>Sprzedaż</td>
+                        {% endif %}
+                            <td>{{ offer.amount }}</td>
+                        <td>{{ offer.realized_amount }}</td>
+                        <td>{{ offer.price }}</td>
+                        <td>{{ offer.datetime }}</td>
+                        <td>{{ offer.id_user }}</td>
+                        <td><a class = "btn btn-default" href="{{ url('/admin/editoffer', {'id': offer.idorder_sheet}) }}" role = "button" >Edytuj</a></td>
+                        <td><a class = "btn btn-default" href="{{ url('/admin/deleteoffer', {'id': offer.idorder_sheet}) }}" role = "button" >Usuń</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <table class = "table">
+            <caption>Zrealizowane oferty</caption>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa akcji</th>
+                <th>Rodzaj</th>
+                <th>Ilość</th>
+                <th>Zrealizowana ilość</th>
+                <th>Cena</th>
+                <th>Data</th>
+                <th>Id użytkownika</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for offer in order_sheet %}
+                {% if offer.realized == 1 %}
+                    <tr>
+                        <td>{{ offer.idorder_sheet }}</td>
+                        <td>{{ offer.stock_name }}</td>
+                        <td>{{ offer.buysell }}</td>
+                        <td>{{ offer.amount }}</td>
+                        <td>{{ offer.realized_amount }}</td>
+                        <td>{{ offer.price }}</td>
+                        <td>{{ offer.datetime }}</td>
+                        <td>{{ offer.id_user }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

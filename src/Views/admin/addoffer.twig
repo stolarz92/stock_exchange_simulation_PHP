@@ -1,0 +1,17 @@
+{% extends 'base.twig' %}
+
+{% block title %}Dodawanie oferty{% endblock %}
+
+{% block content %}
+
+    {% for flashMessage in app.session.getFlashBag.get('message') %}
+        {{ flashMessage.content }}
+    {% endfor %}
+    <div>
+        <form action="" method="post" style="float:left">
+            {{ form_widget(form) }}
+            <input class="btn btn-default" type="submit" name="Send">
+        </form>
+    </div>
+
+{% endblock %}
